@@ -11,16 +11,15 @@ const MongoUtil = require("./MongoUtil");
 // initialize express
 const app = express();
 
-// routes 
-app.use('/posts', require("./routes/posts"));
+// routes
+app.use("/posts", require("./routes/posts"));
 
 // enable us to send post request
-app.use(bodyParser.json({ limit: "30mb", extended: true}));
-app.use(bodyParser.urlencoded({ limit: "30mb", extended: true}));
-// enable cross site origin resources sharing 
+app.use(bodyParser.json({ limit: "30mb", extended: true }));
+app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
+// enable cross site origin resources sharing
 app.use(cors());
 
-
 app.listen(PORT, () => {
-    console.log(`Server started on port ${PORT}`)
-})
+  console.log(`Server started on port ${PORT}`);
+});
