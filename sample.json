@@ -1,0 +1,58 @@
+{
+    "userName": "",
+    "description": "",
+    "typeOfAstrography": "",
+    "equipment": {
+                "camera": "",
+                "mount": "",
+                "telescope": ""
+    },
+    "imageUrl": "",
+    "processingData": [],
+    "calibrationFrame": [],
+    "location": {
+                "lattitude": "",
+                "longitude": ""
+    },
+    "likeCount": {
+        "type": "Number",
+        "default": 0
+    },
+    "createdAt": {
+        "type": Date,
+        "default": new Date()
+    },
+    
+
+}
+
+
+
+
+
+
+
+
+
+
+
+_id: 13242a, 
+Username: “ “,
+Description: “ “,
+typeOfAstrography: solar, planetary, deep sky (radio button)
+equipment: {
+			camera: “ “,
+			mounts: “ “,
+			telescope: “ “,
+			},
+processingData: [Deep Sky Stacker, PixInsight, APP, Prism, SiriL, Star Tools],
+calibrationFrame: [dark,bias,flat,light] (checkboxes)
+date: “ “,
+location: “ “,
+otherEquipment: “ “, 
+imageUpload: ,
+review {
+		email:
+		comment:
+		date posted:
+		}
