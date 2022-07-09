@@ -1,0 +1,32 @@
+{
+    "_id": "62c5af02cbdc9f98353126a7",
+    "userName": "Ben",
+    "imageUrl": "https://www.trivalleystargazers.org/gert/deepsky_foto/m33_opt.jpg",
+    "description": "Last night sky was quite clear and bought my gear out.Big one shows Lagoon (M8) and small one shows trifid (M20) Nebula in the constellation Sagittarius. Lagoon is classified as an emission nebula and as an H II region. Trifid Nebula is an H II region in the north west of Sagittarius. It is a unusual combination of open clusters, an emission nebula with a red-yellow portion, a reflection nebula with blue portion and a dark nebula with the gaps in the appearance that cause the trifurcated appearance. Lagoon nebula is estimated about 4000-6000 light years from earth. Trifid is centered about 4100 light years from earth.",
+    "typeOfAstrography": "deep sky",
+    "equipment": {
+      "camera": "Nikon D5300",
+      "mount": "Orion 9822 AstroView Equatorial",
+      "telescope": "AstroMaster 76EQ Newtonian Telescope"
+    },
+    "processingData": [
+      "Lightroom",
+      "Photoshop"
+    ],
+    "calibrationFrame": [
+      "Dark",
+      "Flat"
+    ],
+    "location": {
+      "latitude": "1.290270",
+      "longitude": "103.851959"
+    },
+    "dateTime": "2022-07-06T13:09:28.081Z",
+    "comment": [
+        {
+            "_id": "623bdaeb66f3c35a312c2ff6",
+            "comment": "Nice place!",
+            "date_of_comment": "2022-09-06T13:09:28.081Z"
+        }
+    ]
+  }
