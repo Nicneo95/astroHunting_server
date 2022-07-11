@@ -117,7 +117,7 @@ async function main() {
     }
   );
   // update post
-  app.put("/updatePosts/:_id", async function (req, res) {
+  app.put("/updatePosts/:_id", validate.validate(validatePosts.updateSchema), async function (req, res) {
       try {
         let userName = req.body.userName;
         let imageUrl = req.body.imageUrl;
@@ -125,12 +125,12 @@ async function main() {
         let typeOfAstrography = req.body.typeOfAstrography;
         let equipment = req.body.equipment;
         let processingData = req.body.processingData;
-        let calibrationFrame = processCheckbox(req.body.calibrationFrame);
+        let calibrationFrame = req.body.calibrationFrame;
         let location = req.body.location;
         let dateTime = req.body.dateTime 
           ? new Date(req.body.dateTime)
           : new Date();
-
+  
         let results = await db.collection("astroHunting_posts").updateOne(
           {
             _id: ObjectId(req.params._id),
@@ -145,12 +145,13 @@ async function main() {
               processingData: processingData,
               calibrationFrame: calibrationFrame,
               location: location,
-              dateTime: new Date(dateTime),
+              dateTime: dateTime,
             },
           }
         );
         res.status(200);
         res.json(results);
+        console.log(results)
       } catch (e) {
         res.status(500);
         res.send("Sever error. Please contact adminstrator");
