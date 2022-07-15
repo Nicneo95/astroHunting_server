@@ -41,7 +41,7 @@ async function main() {
     }
   });
   // return search database posts
-  app.get("/getPosts/search", async function (req, res) {
+  app.get("/search", async function (req, res) {
     try {
       let criteria = {};
       // find by userName
@@ -64,19 +64,45 @@ async function main() {
           $in: [req.query.calibrationFrame],
         };
       }
-      // find by lat/long
-      if (req.query.location) {
-        criteria["location"] = {
-          $or: [req.query.location],
-        };
+      // find by equipment
+      if (req.query.equipment) {
+        criteria["$or"] = [
+          {
+            "camera": {
+              "$regex": `${ObjectCamera(req.query.equipment)}`,
+              "$options": "i"
+            }
+          },
+          {
+            "mount": {
+              "$regex": `${ObjectMount(req.query.equipment)}`,
+              "$options": "i"
+            }
+          },
+          {
+            "telescope": {
+              "$regex": `${ObjectTelescope(req.query.equipment)}`,
+              "$options": "i"
+            }
+          }
+        ];
       }
-
       let results = await db
         .collection("astroHunting_posts")
-        .find(criteria)
-        .toArray();
+        .find(criteria,
+          {
+            "projection": {
+              "userName": 1,
+              "imageUrl": 1,
+              "description": 1,
+              "equipment": 1,
+              "processingData": 1,
+              "calibrationFrame": 1,
+              "location": 1,
+            }
+          })
       res.status(201);
-      res.send(results);
+      res.send(await results.toArray());
     } catch (e) {
       res.status(500);
       res.send("Sever error. Please contact adminstrator");
