@@ -40,8 +40,22 @@ async function main() {
       res.send("Sever error. Please contact adminstrator");
     }
   });
+  //  return one database post
+  app.get("/getPost/:id", async function (req, res) {
+    try {
+      let results = await db
+        .collection("astroHunting_posts")
+        .find({ _id: ObjectId(req.params.id) })
+        .toArray();
+      res.status(201);
+      res.send(results[0]);
+    } catch (e) {
+      res.status(500);
+      res.send("Sever error. Please contact adminstrator");
+    }
+  });
   // return search database posts
-  app.get("/search", async function (req, res) {
+  app.get("/getPosts/search", async function (req, res) {
     try {
       let criteria = {};
       // find by userName
@@ -64,52 +78,29 @@ async function main() {
           $in: [req.query.calibrationFrame],
         };
       }
-      // find by equipment
-      if (req.query.equipment) {
-        criteria["$or"] = [
-          {
-            "camera": {
-              "$regex": `${ObjectCamera(req.query.equipment)}`,
-              "$options": "i"
-            }
-          },
-          {
-            "mount": {
-              "$regex": `${ObjectMount(req.query.equipment)}`,
-              "$options": "i"
-            }
-          },
-          {
-            "telescope": {
-              "$regex": `${ObjectTelescope(req.query.equipment)}`,
-              "$options": "i"
-            }
-          }
-        ];
+      // find by lat/long
+      if (req.query.location) {
+        criteria["location"] = {
+          $or: [req.query.location],
+        };
       }
+
       let results = await db
         .collection("astroHunting_posts")
-        .find(criteria,
-          {
-            "projection": {
-              "userName": 1,
-              "imageUrl": 1,
-              "description": 1,
-              "equipment": 1,
-              "processingData": 1,
-              "calibrationFrame": 1,
-              "location": 1,
-            }
-          })
+        .find(criteria)
+        .toArray();
       res.status(201);
-      res.send(await results.toArray());
+      res.send(results);
     } catch (e) {
       res.status(500);
       res.send("Sever error. Please contact adminstrator");
     }
   });
   // add new post
-  app.post("/createPosts", validate.validate(validatePosts.postSchema), async function (req, res) {
+  app.post(
+    "/createPosts",
+    validate.validate(validatePosts.postSchema),
+    async function (req, res) {
       try {
         let userName = req.body.userName;
         let imageUrl = req.body.imageUrl;
@@ -143,7 +134,10 @@ async function main() {
     }
   );
   // update post
-  app.put("/updatePosts/:_id", validate.validate(validatePosts.updateSchema), async function (req, res) {
+  app.put(
+    "/updatePosts/:_id",
+    validate.validate(validatePosts.updateSchema),
+    async function (req, res) {
       try {
         let userName = req.body.userName;
         let imageUrl = req.body.imageUrl;
@@ -153,10 +147,10 @@ async function main() {
         let processingData = req.body.processingData;
         let calibrationFrame = req.body.calibrationFrame;
         let location = req.body.location;
-        let dateTime = req.body.dateTime 
+        let dateTime = req.body.dateTime
           ? new Date(req.body.dateTime)
           : new Date();
-  
+
         let results = await db.collection("astroHunting_posts").updateOne(
           {
             _id: ObjectId(req.params._id),
@@ -177,7 +171,7 @@ async function main() {
         );
         res.status(200);
         res.json(results);
-        console.log(results)
+        console.log(results);
       } catch (e) {
         res.status(500);
         res.send("Sever error. Please contact adminstrator");
@@ -197,44 +191,51 @@ async function main() {
       res.send("Sever error. Please contact adminstrator");
     }
   });
-  // get all comments 
+  // get all comments
   app.get("/comment", async function (req, res) {
     try {
-      let results = await db.collection("astroHunting_posts")
-      .find({
-        comments: {$exists: true}
-      },{
-        projection: {comments: 1}
-      })
-      .toArray()
-      res.json(results)
+      let results = await db
+        .collection("astroHunting_posts")
+        .find(
+          {
+            comments: { $exists: true },
+          },
+          {
+            projection: { comments: 1 },
+          }
+        )
+        .toArray();
+      res.json(results);
     } catch (e) {
-      res.status(500)
+      res.status(500);
       res.send("Sever error. Please contact adminstrator");
     }
-  })
+  });
   // create new comment
-  app.post("/comments/:posts_id:", async function (req, res){
+  app.post("/comments/:posts_id:", async function (req, res) {
     try {
       let _id = new ObjectId();
-      let comment = req.body.comment
+      let comment = req.body.comment;
       let date_of_comment = req.body.date_of_comment
-      ? new Date(req.body.date_of_comment)
-      : new Date();
+        ? new Date(req.body.date_of_comment)
+        : new Date();
 
-      await db.collection("astroHunting_posts").updateOne({
-        _id: ObjectId(req.params.astroHunting_posts._id)
-      },{
-        $push:{
-          comment: {_id,comment,date_of_comment}
+      await db.collection("astroHunting_posts").updateOne(
+        {
+          _id: ObjectId(req.params.astroHunting_posts._id),
+        },
+        {
+          $push: {
+            comment: { _id, comment, date_of_comment },
+          },
         }
-      })
-      res.send("New comment added")
+      );
+      res.send("New comment added");
     } catch (e) {
-      res.status(500)
+      res.status(500);
       res.send("Sever error. Please contact adminstrator");
     }
-  })
+  });
 }
 main();
 
