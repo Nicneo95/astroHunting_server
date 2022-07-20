@@ -2,15 +2,8 @@
 
 # dependencies
 /node_modules
-/.pnp
-.pnp.js
-sessions/
-
-# testing
-/coverage
-
-# production
-/build
+.env
+node_modules
 
 # misc
 .DS_Store
