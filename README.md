@@ -1,3 +1,4 @@
+>Note: This is a bootcamp project that tests the understanding of concepts being taught as of 20 July 2022.
 # astroHunting RESTful API 
 
 ## RESTful API using MongoDB and Express.js
