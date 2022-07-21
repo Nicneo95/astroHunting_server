@@ -193,13 +193,15 @@ Sample body:
     ]
   }
 ```
-
-### Delete animal records based on ID of animal record
+### Delete post
 #### Request
 ```
 DELETE /deletePosts/:_id
-
-
+```
+#### Response
+```
+Deleted
+```
 ## Technologies Used
 - HTML5
 - CSS3
@@ -208,7 +210,7 @@ DELETE /deletePosts/:_id
 - Mongodb
 - yup
 
-## 5. Acknowledgements
+## Acknowledgements
 
 - Backend schema validation with yup and Express.js guide from [PedroTech](https://www.youtube.com/watch?v=KwrJSwWhIDI).
 
